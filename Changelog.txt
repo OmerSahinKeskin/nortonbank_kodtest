@@ -1,0 +1,11 @@
+1. Moved TollFreeVechicles Enum inside TollCalculator to own file named TollFreeVechicles.
+Problem: Not scalable and hard to find if we have a large codebase.
+Reason:
+Easy for new programmers to find the tollfreevechicles if they need to remove or add new vechicles in the future.
+There is also a case for not to move this enum. Since the enum isnt used anywhere else we dont need a new file so only the class should know of its existence. But since a enum file isnt taking alot of space its better for us to move the enums to its own file incase we need to use the enums in the future for something else. If we would have a space issue then we should check if we can optimize the code instead of removing the enum file.
+
+2. Removed or statements of return in isTollFreeVehicle
+Problem: Not scalable and less readability in the future if kept
+Reason:
+Right now we only have 6 vehicletypes so you can argue that this isnt a problem but if we would add more vehicletypes in the future it would take unnecessary time to add but most important it wouldnt be readable if we started to add more vehicletypes.
+If there is only 6 vehicletypes a switchcase would be better used here for easy readability
