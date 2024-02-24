@@ -4,6 +4,22 @@ using TollFeeCalculator;
 
 public class TollCalculator
 {
+    /**
+     * (int,int) represents time of day.
+     * key value represents the cost for passage.
+     */
+    private readonly Dictionary<(int, int), int> tollFeeSchedule = new Dictionary<(int, int), int>
+    {
+        {(6, 0), 8},
+        {(6, 30), 13},
+        {(7, 0), 18},
+        {(8, 0), 13},
+        {(8, 30), 8},
+        {(15, 0), 13},
+        {(15, 30), 18},
+        {(17, 0), 13},
+        {(18, 0), 8}
+    };
 
     /**
      * Calculate the total toll fee for one day
@@ -57,16 +73,14 @@ public class TollCalculator
         int hour = date.Hour;
         int minute = date.Minute;
 
-        if (hour == 6 && minute >= 0 && minute <= 29) return 8;
-        else if (hour == 6 && minute >= 30 && minute <= 59) return 13;
-        else if (hour == 7 && minute >= 0 && minute <= 59) return 18;
-        else if (hour == 8 && minute >= 0 && minute <= 29) return 13;
-        else if (hour >= 8 && hour <= 14 && minute >= 30 && minute <= 59) return 8;
-        else if (hour == 15 && minute >= 0 && minute <= 29) return 13;
-        else if (hour == 15 && minute >= 0 || hour == 16 && minute <= 59) return 18;
-        else if (hour == 17 && minute >= 0 && minute <= 59) return 13;
-        else if (hour == 18 && minute >= 0 && minute <= 29) return 8;
-        else return 0;
+        foreach (var time in tollFeeSchedule.OrderByDescending(e => e.Key))
+        {
+            var (entryHour, entryMinute) = time.Key;
+            if (hour > entryHour || (hour == entryHour && minute >= entryMinute))
+                return time.Value;
+        }
+
+        return 0;
     }
 
     private Boolean IsTollFreeDate(DateTime date)
