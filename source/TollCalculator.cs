@@ -1,4 +1,5 @@
-﻿using System;
+﻿using kodtest.source;
+using System;
 using System.Globalization;
 using TollFeeCalculator;
 
@@ -29,14 +30,14 @@ public class TollCalculator
      * @return - the total toll fee for that day
      */
 
-    public int GetTollFee(Vehicle vehicle, DateTime[] dates)
+    public int GetTollFee(Vehicle vehicle, DateTime[] dates, RedDays redDaysInYear)
     {
         DateTime intervalStart = dates[0];
         int totalFee = 0;
         foreach (DateTime date in dates)
         {
-            int nextFee = GetTollFee(date, vehicle);
-            int tempFee = GetTollFee(intervalStart, vehicle);
+            int nextFee = GetTollFee(date, vehicle, redDaysInYear);
+            int tempFee = GetTollFee(intervalStart, vehicle, redDaysInYear);
 
             long diffInMillies = date.Millisecond - intervalStart.Millisecond;
             long minutes = diffInMillies / 1000 / 60;
@@ -66,9 +67,9 @@ public class TollCalculator
         return tollFreeVehicles.Contains(vehicleType);
     }
 
-    public int GetTollFee(DateTime date, Vehicle vehicle)
+    public int GetTollFee(DateTime date, Vehicle vehicle, RedDays redDaysInYear)
     {
-        if (IsTollFreeDate(date) || IsTollFreeVehicle(vehicle)) return 0;
+        if (IsTollFreeDate(date, redDaysInYear) || IsTollFreeVehicle(vehicle)) return 0;
 
         int hour = date.Hour;
         int minute = date.Minute;
@@ -83,7 +84,7 @@ public class TollCalculator
         return 0;
     }
 
-    private Boolean IsTollFreeDate(DateTime date)
+    private Boolean IsTollFreeDate(DateTime date, RedDays redDaysInYear)
     {
         int year = date.Year;
         int month = date.Month;
@@ -91,20 +92,9 @@ public class TollCalculator
 
         if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday) return true;
 
-        if (year == 2013)
-        {
-            if (month == 1 && day == 1 ||
-                month == 3 && (day == 28 || day == 29) ||
-                month == 4 && (day == 1 || day == 30) ||
-                month == 5 && (day == 1 || day == 8 || day == 9) ||
-                month == 6 && (day == 5 || day == 6 || day == 21) ||
-                month == 7 ||
-                month == 11 && day == 1 ||
-                month == 12 && (day == 24 || day == 25 || day == 26 || day == 31))
-            {
-                return true;
-            }
-        }
+        if (year == redDaysInYear.Year)
+            return redDaysInYear.RedDaysInMonth[month].Contains(day);
+
         return false;
     }
 }

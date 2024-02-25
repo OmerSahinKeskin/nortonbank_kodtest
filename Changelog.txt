@@ -17,3 +17,14 @@ Ill start by saying there is two ways to change this method.
 1. First way to change this is that I would have to make an assumption and that assumption would be that the times and prices will never change and will always be the same. in that case a switch statement would be perfect instead of a alot of if, else if statements. swtich statements would make it more readable.
 2. Secound way is that I assume we would change the times and even add more times in the future and even change prices.
 So a Dictionary is added on top of the file to make it easier for next programmer to add a new timespans and change prices. By adding hours and minutes in the first pair(key) in the dictonary and adding price as the value.
+
+4. Changed IsTollFreeDate(DateTime date) to IsTollFreeDate(DateTime date, RedDays redDaysInYear)
+Problem: Not scalable, Hard to change and might be hard to read if many days are red days in a year.
+Reason:
+Ill start by saying im not aware of any standard library that can be used to see all red days in a year for sweden. I have found a thirdparty library that you can use but i wont use it here since the asignment was more about styling and not implementation.(library name is https://github.com/nager/Nager.Date)
+
+The old implementation of IsTollFreeDate would make it so that we would need alot of hard coded red days and we would have to add it to the if-statement. we could theortically end up with 12 rows if statements that are 31 spaces long. that will be unreadable.
+
+The new implementation would make it able for us to either ping a server and create a dictionary for our program to use without needing to change any if statements and even inject a dictionary with all red days for the year when program startup.
+
+The changes will also make the code more testable(even if some people thing private methods shouldnt be tested).
