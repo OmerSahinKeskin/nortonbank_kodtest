@@ -28,3 +28,9 @@ The old implementation of IsTollFreeDate would make it so that we would need alo
 The new implementation would make it able for us to either ping a server and create a dictionary for our program to use without needing to change any if statements and even inject a dictionary with all red days for the year when program startup.
 
 The changes will also make the code more testable(even if some people thing private methods shouldnt be tested).
+
+5. Removed hard coded price information.
+Problem: Hard to change.
+Reason:
+Hardcoded values that we know will/might change in the future i.e. prices and maxfee is better to have as an enums so that its easy to change when needed.
+Hardcoded values like minutes, hours, sec of the day is ok to have if they are used as tools to convert from day to hours, min and sec.

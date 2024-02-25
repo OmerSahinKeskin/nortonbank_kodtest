@@ -1,6 +1,4 @@
 ﻿using kodtest.source;
-using System;
-using System.Globalization;
 using TollFeeCalculator;
 
 public class TollCalculator
@@ -11,15 +9,15 @@ public class TollCalculator
      */
     private readonly Dictionary<(int, int), int> tollFeeSchedule = new Dictionary<(int, int), int>
     {
-        {(6, 0), 8},
-        {(6, 30), 13},
-        {(7, 0), 18},
-        {(8, 0), 13},
-        {(8, 30), 8},
-        {(15, 0), 13},
-        {(15, 30), 18},
-        {(17, 0), 13},
-        {(18, 0), 8}
+        {(6, 0), (int)TollFeePriceInformation.LowTraficPrice},
+        {(6, 30), (int)TollFeePriceInformation.MidTraficPrice},
+        {(7, 0), (int)TollFeePriceInformation.HighTraficPrice},
+        {(8, 0), (int)TollFeePriceInformation.MidTraficPrice},
+        {(8, 30), (int)TollFeePriceInformation.LowTraficPrice},
+        {(15, 0), (int)TollFeePriceInformation.MidTraficPrice},
+        {(15, 30), (int)TollFeePriceInformation.HighTraficPrice},
+        {(17, 0), (int)TollFeePriceInformation.MidTraficPrice},
+        {(18, 0), (int)TollFeePriceInformation.LowTraficPrice}
     };
 
     /**
@@ -53,7 +51,7 @@ public class TollCalculator
                 totalFee += nextFee;
             }
         }
-        if (totalFee > 60) totalFee = 60;
+        if (totalFee > (int)TollFeePriceInformation.MaxToolFee) totalFee = (int)TollFeePriceInformation.MaxToolFee;
         return totalFee;
     }
 
