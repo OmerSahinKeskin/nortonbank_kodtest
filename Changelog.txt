@@ -1,3 +1,20 @@
+Intro:
+
+When I build a system that is meant to scale up, I try to keep a few things in mind.
+
+Readability and clarity - Easier for someone else to work with your codebase.
+Easy to test - Easy to demonstrate and ensure that your codebase works as intended.
+Breaking down the code into smaller pieces (different classes, enums, etc.) so that you can reuse a lot and make testing easier.
+Of course, performance is also important to consider.
+
+Ideally, before this is sent off to a client or used, it should be tested to prove that it works.
+
+I should also mention that I think tollFeeSchedule, which I have added, might need to be mentioned earlier somewhere to make GetTollFee more testable. But I chose to define it directly in the class because it won't change often and won't be used anywhere else.
+
+Im also aware of "public void AddRedDays(Dictionary<int, List<int>> redDaysInMonth)" in class RedDays isnt good performance wise since we have a nested foreach loop. I think its ok. since this method ideally should only be called once a year. 
+
+Changes I have made and brief justifications.
+
 1. Moved TollFreeVechicles Enum inside TollCalculator to own file named TollFreeVechicles.
 Problem: Not scalable and hard to find if we have a large codebase.
 Reason:
