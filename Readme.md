@@ -11,3 +11,7 @@ Ingen deadline, men lämna ett resultat inom 7-10 dagar.
 
 # Inlämning
 Lägg upp lösningen på din egen github så vi kan följa commit-historiken. 
+
+# Where to find information about changes made and motivation
+
+In ChangeLog you can find changes i have made and a small motivation to why the changes where made.
